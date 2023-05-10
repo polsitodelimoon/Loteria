@@ -6,26 +6,23 @@ listanum=[]
 listabolts=[]
 
 def boleto():
-    con=sqlite3.connect('numeroSQL.db') #Conectamos con la base de datos
-    cursor=con.cursor() #Creamos el cursor
-
-    table=con.execute("""SELECT NAME FROM sqlite_master WHERE type='table' AND name='NUMEROS'""").fetchall() #Comprobamos si la tabla ya existe
-
-    #Si no existe la creamos
-    if table == "[]":
-        cursor.execute("""CREATE TABLE numeros (
-            num int
+    #Conectamos con la base de datos
+    con=sqlite3.connect('numeroSQL.db')
+    #Creamos el cursor
+    cursor=con.cursor()
+    #Creamos la tabla, en caso de que no exista
+    cursor.execute("""CREATE TABLE IF NOT EXISTS numeros (
+        num int
         )  
-        """)  
-    else:
-        pass
+        """)
 
     jugar='si'
 
     while jugar=='si':
-        jugar=input('¿Desea sacar un décimo aleatorio?: ')  #Preguntamos si desea jugar, si es que no saldrá del while y se acabará la ejecución 
-
-        for num in range(50):       #Añadimos todos los números hasta el 50 para que más tarde elija un número de los que hay en la lista
+        #Preguntamos si desea jugar, si es que no saldrá del while y se acabará el programa
+        jugar=input('¿Desea sacar un décimo aleatorio?: ')  
+        #Añadimos todos los números hasta el 50 para que más tarde elija un número de los que hay en la lista
+        for num in range(50):
             listanum.append(num)
 
         listanum.remove(0)
